@@ -130,7 +130,7 @@ void bad_request(int client)
  * Parameters: the client socket descriptor
  *             FILE pointer for the file to cat */
 /**********************************************************************/
-void cat(int client, FILE *resouce)
+void cat(int client, FILE *resource)
 {
   char buf[1024];
 
@@ -177,9 +177,11 @@ void execute_cgi(int client, const char *path, const char *method, const char *q
   int content_length = -1;
 
   buf[0] = 'A'; buf[1] = '\0';
-  if (strcasecmp(method, "GET")
-    whille ((numchars > 0) && strcmp("\n",buf))       /*读取并丢弃htto headers*/
-      numchars = get_line(client, buf, sizeof(buf));
+  if (strcasecmp(method, "GET")){
+    whille ((numchars > 0) && strcmp("\n",buf)){
+          numchars = get_line(client, buf, sizeof(buf));
+      }/*读取并丢弃http headers*/
+  }
   else if (strcasecmp(buf,"POST ") == 0)              /*POST*/
   {
     numchars = get_line(client, buf, sizeof(buf));
@@ -231,7 +233,7 @@ void execute_cgi(int client, const char *path, const char *method, const char *q
       putenv(meth_env);
       if (strcasecmp(method, "GET") == 0)
       {
-        sprintf(query_env "QUERY_STRING=%s", query_string);
+        sprintf(query_env, "QUERY_STRING=%s", query_string);
         putenv(query_env);
       }
       exec;(path, NULL);
@@ -294,7 +296,7 @@ void execute_cgi(int client, const char *path, const char *method, const char *q
     }
     buf[i] = '\0';
 
-    return(i)
+    return(i);
   }
 
   /**********************************************************************/
@@ -361,7 +363,7 @@ void serve_file(int client, const char *filename)
 
   resource = fopen(filename, "r");
   if (resouce == NULL)
-    not_found(client)
+    not_found(client);
   else
   {
     headers(client, filename);
@@ -377,7 +379,7 @@ void serve_file(int client, const char *filename)
  * Parameters: pointer to variable containing the port to connect on
  * Returns: the socket */
 /**********************************************************************/
-int startup(u*short port)
+int startup(u_short port)
 {
   int httpd = 0;
   struct sockaddr_in name;
